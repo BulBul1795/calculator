@@ -117,7 +117,7 @@ namespace calculator {
 			// 
 			// buttonDot
 			// 
-			this->buttonDot->BackColor = System::Drawing::Color::Gray;
+			this->buttonDot->BackColor = System::Drawing::Color::SteelBlue;
 			this->buttonDot->FlatAppearance->BorderSize = 0;
 			this->buttonDot->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->buttonDot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 52, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -130,6 +130,7 @@ namespace calculator {
 			this->buttonDot->TabIndex = 0;
 			this->buttonDot->Text = L".";
 			this->buttonDot->UseVisualStyleBackColor = false;
+			this->buttonDot->Click += gcnew System::EventHandler(this, &MyForm::buttonDot_Click);
 			// 
 			// buttonNum0
 			// 
@@ -163,6 +164,7 @@ namespace calculator {
 			this->buttonEqual->TabIndex = 2;
 			this->buttonEqual->Text = L"=";
 			this->buttonEqual->UseVisualStyleBackColor = false;
+			this->buttonEqual->Click += gcnew System::EventHandler(this, &MyForm::buttonEqual_Click);
 			// 
 			// buttonNum7
 			// 
@@ -497,13 +499,16 @@ namespace calculator {
 
 		}
 #pragma endregion
-	private: double firstN, secendN;
+	private: double firstN, secondN;
 		   char logic;
+		   double equal;
+		   bool isCalculate = false;
 	private: System::Void buttonNum_Click(System::Object^ sender, System::EventArgs^ e) {
 		Button^ button = safe_cast<Button^>(sender);
-		if (this->resultlabel->Text == "0")
+		if (this->resultlabel->Text == "0" || isCalculate)
 		{
 			this->resultlabel->Text = button->Text;
+			isCalculate = false;
 		}
 		else
 		{
@@ -512,7 +517,6 @@ namespace calculator {
 				this->resultlabel->Text += button->Text;
 			}
 		}
-
 	}
 	private: 
 	System::Void buttonPlus_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -539,13 +543,46 @@ namespace calculator {
 		this->resultlabel->Text = L"0";
 	}
 
-	private: System::Void buttonPercent_Click(System::Object^ sender, System::EventArgs^ e) {
+	System::Void buttonPercent_Click(System::Object^ sender, System::EventArgs^ e) {
 		firstN = System::Convert::ToDouble(this->resultlabel->Text);
 		logic = '%';
 		this->resultlabel->Text = L"0";
 	}
 
+	private: double algorithm(double firstN, double secondN, char logic) {
+		switch (logic)
+		{
+			case '+': return firstN + secondN; break;
+			case '-': return firstN - secondN; break;
+			case '*': return firstN * secondN; break;
+			case '/': if (secondN == 0)
+			{
+				return -1.11111; break;
+			}
+			else
+			{
+				return firstN / secondN; break;
+			}
+		}
+	}
+
+	private: System::Void buttonEqual_Click(System::Object^ sender, System::EventArgs^ e) {
+		secondN = System::Convert::ToDouble(this->resultlabel->Text);
+		equal = algorithm(firstN, secondN, logic);
+		this->resultlabel->Text = System::Convert::ToString(equal);
+		if (equal == -1.11111)
+		{
+			this->resultlabel->Text = L"Error!";
+		}
+		isCalculate = true;
+	}
+
+	private: System::Void buttonDot_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->resultlabel->Text += L",";
+	}
+
 	private: System::Void buttonClear_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->resultlabel->Text = L"0";
 	}
 };
 }
