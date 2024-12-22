@@ -503,6 +503,8 @@ namespace calculator {
 		   char logic;
 		   double equal;
 		   bool isCalculate = false;
+		   int firstNI;
+		   int secondNI;
 	private: System::Void buttonNum_Click(System::Object^ sender, System::EventArgs^ e) {
 		Button^ button = safe_cast<Button^>(sender);
 		if (this->resultlabel->Text == "0" || isCalculate)
@@ -549,7 +551,9 @@ namespace calculator {
 		this->resultlabel->Text = L"0";
 	}
 
-	private: double algorithm(double firstN, double secondN, char logic) {
+	private: double algorithm(double firstN, double secondN, char logic, int firstNI, int secondNI) {
+		firstNI = Convert::ToInt32(firstN);
+		secondNI = Convert::ToInt32(secondN);
 		switch (logic)
 		{
 			case '+': return firstN + secondN; break;
@@ -563,12 +567,16 @@ namespace calculator {
 			{
 				return firstN / secondN; break;
 			}
+			case '%': if (firstNI % secondNI)
+			{
+				return firstNI % secondNI;
+			}
 		}
 	}
 
 	private: System::Void buttonEqual_Click(System::Object^ sender, System::EventArgs^ e) {
 		secondN = System::Convert::ToDouble(this->resultlabel->Text);
-		equal = algorithm(firstN, secondN, logic);
+		equal = algorithm(firstN, secondN, logic, firstNI, secondNI);
 		this->resultlabel->Text = System::Convert::ToString(equal);
 		if (equal == -1.11111)
 		{
@@ -578,7 +586,17 @@ namespace calculator {
 	}
 
 	private: System::Void buttonDot_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->resultlabel->Text += L",";
+		if (this->resultlabel->Text + L"," != this->resultlabel->Text)
+		{
+			this->resultlabel->Text += L",";
+			firstN = System::Convert::ToDouble(this->resultlabel->Text);
+		}
+	
+		if (this->resultlabel->Text + L"," == this->resultlabel->Text)
+		{
+			this->resultlabel->Text += L",";
+			secondN = System::Convert::ToDouble(this->resultlabel->Text);
+		}
 	}
 
 	private: System::Void buttonClear_Click(System::Object^ sender, System::EventArgs^ e) {
