@@ -60,9 +60,11 @@ namespace calculator {
 
 
 	private: System::Windows::Forms::Button^ buttonClear;
+	private: System::Windows::Forms::Button^ buttonClearN;
 
-	private: System::Windows::Forms::Button^ button14;
-	private: System::Windows::Forms::Button^ button15;
+
+	private: System::Windows::Forms::Button^ buttonPow;
+
 	private: System::Windows::Forms::Button^ buttonDivide;
 
 	private: System::Windows::Forms::Button^ buttonMultiply;
@@ -105,8 +107,8 @@ namespace calculator {
 			this->buttonNum2 = (gcnew System::Windows::Forms::Button());
 			this->buttonNum3 = (gcnew System::Windows::Forms::Button());
 			this->buttonClear = (gcnew System::Windows::Forms::Button());
-			this->button14 = (gcnew System::Windows::Forms::Button());
-			this->button15 = (gcnew System::Windows::Forms::Button());
+			this->buttonClearN = (gcnew System::Windows::Forms::Button());
+			this->buttonPow = (gcnew System::Windows::Forms::Button());
 			this->buttonDivide = (gcnew System::Windows::Forms::Button());
 			this->buttonMultiply = (gcnew System::Windows::Forms::Button());
 			this->buttonMinus = (gcnew System::Windows::Forms::Button());
@@ -336,35 +338,39 @@ namespace calculator {
 			this->buttonClear->UseVisualStyleBackColor = false;
 			this->buttonClear->Click += gcnew System::EventHandler(this, &MyForm::buttonClear_Click);
 			// 
-			// button14
+			// buttonClearN
 			// 
-			this->button14->BackColor = System::Drawing::Color::SteelBlue;
-			this->button14->FlatAppearance->BorderSize = 0;
-			this->button14->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 34, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonClearN->BackColor = System::Drawing::Color::SteelBlue;
+			this->buttonClearN->FlatAppearance->BorderSize = 0;
+			this->buttonClearN->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->buttonClearN->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 40, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button14->ForeColor = System::Drawing::Color::White;
-			this->button14->Location = System::Drawing::Point(133, 249);
-			this->button14->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->button14->Name = L"button14";
-			this->button14->Size = System::Drawing::Size(116, 110);
-			this->button14->TabIndex = 13;
-			this->button14->UseVisualStyleBackColor = false;
+			this->buttonClearN->ForeColor = System::Drawing::Color::White;
+			this->buttonClearN->Location = System::Drawing::Point(133, 249);
+			this->buttonClearN->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->buttonClearN->Name = L"buttonClearN";
+			this->buttonClearN->Size = System::Drawing::Size(116, 110);
+			this->buttonClearN->TabIndex = 13;
+			this->buttonClearN->Text = L"⌫";
+			this->buttonClearN->UseVisualStyleBackColor = false;
+			this->buttonClearN->Click += gcnew System::EventHandler(this, &MyForm::buttonClearN_Click);
 			// 
-			// button15
+			// buttonPow
 			// 
-			this->button15->BackColor = System::Drawing::Color::SteelBlue;
-			this->button15->FlatAppearance->BorderSize = 0;
-			this->button15->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button15->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 60, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonPow->BackColor = System::Drawing::Color::SteelBlue;
+			this->buttonPow->FlatAppearance->BorderSize = 0;
+			this->buttonPow->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->buttonPow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 60, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button15->ForeColor = System::Drawing::Color::White;
-			this->button15->Location = System::Drawing::Point(256, 249);
-			this->button15->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->button15->Name = L"button15";
-			this->button15->Size = System::Drawing::Size(116, 110);
-			this->button15->TabIndex = 14;
-			this->button15->UseVisualStyleBackColor = false;
+			this->buttonPow->ForeColor = System::Drawing::Color::White;
+			this->buttonPow->Location = System::Drawing::Point(256, 249);
+			this->buttonPow->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->buttonPow->Name = L"buttonPow";
+			this->buttonPow->Size = System::Drawing::Size(116, 110);
+			this->buttonPow->TabIndex = 14;
+			this->buttonPow->Text = L"^";
+			this->buttonPow->UseVisualStyleBackColor = false;
+			this->buttonPow->Click += gcnew System::EventHandler(this, &MyForm::buttonPow_Click);
 			// 
 			// buttonDivide
 			// 
@@ -476,8 +482,8 @@ namespace calculator {
 			this->Controls->Add(this->buttonMinus);
 			this->Controls->Add(this->buttonMultiply);
 			this->Controls->Add(this->buttonDivide);
-			this->Controls->Add(this->button15);
-			this->Controls->Add(this->button14);
+			this->Controls->Add(this->buttonPow);
+			this->Controls->Add(this->buttonClearN);
 			this->Controls->Add(this->buttonClear);
 			this->Controls->Add(this->buttonNum3);
 			this->Controls->Add(this->buttonNum2);
@@ -494,7 +500,7 @@ namespace calculator {
 			this->ForeColor = System::Drawing::Color::White;
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"Calculator";
 			this->ResumeLayout(false);
 
 		}
@@ -551,6 +557,12 @@ namespace calculator {
 		this->resultlabel->Text = L"0";
 	}
 
+	System::Void buttonPow_Click(System::Object^ sender, System::EventArgs^ e) {
+		firstN = System::Convert::ToDouble(this->resultlabel->Text);
+		logic = '^';
+		this->resultlabel->Text = L"0";
+	}
+
 	private: double algorithm(double firstN, double secondN, char logic, int firstNI, int secondNI) {
 		firstNI = Convert::ToInt32(firstN);
 		secondNI = Convert::ToInt32(secondN);
@@ -571,6 +583,7 @@ namespace calculator {
 			{
 				return firstNI % secondNI;
 			}
+			case '^': return Math::Pow(firstN, secondN);
 		}
 	}
 
@@ -586,16 +599,16 @@ namespace calculator {
 	}
 
 	private: System::Void buttonDot_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (this->resultlabel->Text + L"," != this->resultlabel->Text)
+		if (!resultlabel->Text->Contains(","))
 		{
-			this->resultlabel->Text += L",";
-			firstN = System::Convert::ToDouble(this->resultlabel->Text);
+			resultlabel->Text += ",";
 		}
-	
-		if (this->resultlabel->Text + L"," == this->resultlabel->Text)
+	}
+
+	private: System::Void buttonClearN_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!System::String::IsNullOrEmpty(this->resultlabel->Text))
 		{
-			this->resultlabel->Text += L",";
-			secondN = System::Convert::ToDouble(this->resultlabel->Text);
+			this->resultlabel->Text = this->resultlabel->Text->Substring(0, this->resultlabel->Text->Length - 1);
 		}
 	}
 
