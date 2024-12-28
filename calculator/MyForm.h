@@ -357,7 +357,7 @@ namespace calculator {
 			// 
 			// buttonPow
 			// 
-			this->buttonPow->BackColor = System::Drawing::Color::SteelBlue;
+			this->buttonPow->BackColor = System::Drawing::Color::Blue;
 			this->buttonPow->FlatAppearance->BorderSize = 0;
 			this->buttonPow->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->buttonPow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 60, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
